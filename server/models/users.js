@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-    firstname:{
+    firstName:{
         type:String,
         required:true,
         min:3,
         max:20
 
     },
-    lastname:{
+    lastName:{
         type:String,
         required:true,
         min:3,
@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
     },
     picturePath:{
         type:String,
-        required:true,
+        // required:true,
         default:""
 
     },
@@ -49,3 +49,5 @@ const userSchema = mongoose.Schema({
 );
 
 const User = mongoose.model("User", userSchema);
+
+export default User;
