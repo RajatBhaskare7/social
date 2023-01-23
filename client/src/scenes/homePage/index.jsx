@@ -16,8 +16,8 @@ const HomePage = () => {
     console.log("HomePage state", state);
     return state;
   });
-  // cons
-  console.log(_id, picturePath);
+ 
+  
   return (
     <Box>
       <Navbar />

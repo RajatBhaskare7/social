@@ -1,5 +1,5 @@
 import Post from '../models/post.js';
-
+import User from '../models/users.js';
 
 /*CREATE*/
 

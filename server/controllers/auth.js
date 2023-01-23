@@ -52,16 +52,16 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         console.log(req.body,"req.body")
-        const oldUser = await User.findOne({
+        const user = await User.findOne({
             email: email,
         });
-        console.log(oldUser,"oldUser");
-        if (!oldUser) return res.status(400).json({ message: "User doesn't exist" });
-        // const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+        console.log(user,"user");
+        if (!user) return res.status(400).json({ message: "User doesn't exist" });
+        // const isPasswordCorrect = await bcrypt.compare(password, user.password);
         // console.log(isPasswordCorrect);
         // if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentialss" });
 
-        const ismatch = await bcrypt.compare(password, oldUser.password);
+        const ismatch = await bcrypt.compare(password, user.password);
         console.log(ismatch);
         if (!ismatch) return res.status(400).json({ message: "Invalid credentials" });
 
@@ -69,8 +69,8 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({id:User._id}, process.env.JWT_SECRET);
         console.log(token);
-        delete oldUser.password;
-        res.status(200).json({ token,oldUser});
+        delete user.password;
+        res.status(200).json({ token,user});
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }
