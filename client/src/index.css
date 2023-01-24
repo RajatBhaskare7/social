@@ -8,3 +8,20 @@ body,
   width: 100%;
   font-family: "Rubik", sans-serif;
 }
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.nav{
+  position: fixed;
+}

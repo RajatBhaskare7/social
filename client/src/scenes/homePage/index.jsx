@@ -13,7 +13,9 @@ const HomePage = () => {
 
   return (
     <Box>
+      {/* fixed on top <Navbar /> */}
       <Navbar />
+      
       <Box
         width="100%"
         padding="2rem 6%"

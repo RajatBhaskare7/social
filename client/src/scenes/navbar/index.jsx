@@ -42,7 +42,14 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween sx={{
+      position: "sticky",
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1,
+
+    }}  padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
