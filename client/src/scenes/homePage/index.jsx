@@ -8,16 +8,9 @@ import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 
 const HomePage = () => {
-  console.log("HomePage");
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const { _id, picturePath } = useSelector((state) => state.user);
 
-  const { _id, picturePath } = useSelector((state) =>
-  {
-    console.log("HomePage state", state);
-    return state;
-  });
- 
-  
   return (
     <Box>
       <Navbar />
