@@ -49,11 +49,32 @@ const UserWidget = ({ userId, picturePath }) => {
   } = user;
 
   return (
-    <WidgetWrapper>
+    //make this a component fixed to the right side of the screen
+
+    
+    <WidgetWrapper 
+    sx={{
+      position: "fixed",
+      top: "100",
+      left: "5",
+      width: "22%",
+      // height: "100%",
+      // backgroundColor: "white",
+      zIndex: "100",
+      overflow: "scroll",
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
+      
+
+    }}
+      
+    >
       {/* FIRST ROW */}
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
+        
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">

@@ -15,18 +15,20 @@ const HomePage = () => {
     <Box>
       {/* fixed on top <Navbar /> */}
       <Navbar />
-      
+
       <Box
         width="100%"
         padding="2rem 6%"
         display={isNonMobileScreens ? "flex" : "block"}
         gap="0.5rem"
         justifyContent="space-between"
+        
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={picturePath} />
+        <Box  flexBasis={isNonMobileScreens ? "26%" : undefined}>
+          <UserWidget  userId={_id} picturePath={picturePath} />
         </Box>
         <Box
+        
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >

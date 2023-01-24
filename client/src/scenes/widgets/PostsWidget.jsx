@@ -39,7 +39,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   return (
     <>
-      {posts.map(
+      {/* {posts.map(
         ({
           _id,
           userId,
@@ -65,7 +65,49 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             comments={comments}
           />
         )
-      )}
+      )} */}
+
+
+      {posts
+        .slice(0)
+        .reverse()
+        .map(
+          ({
+            _id,
+            userId,
+            firstName,
+            lastName,
+            description,
+            location,
+            picturePath,
+            userPicturePath,
+            likes,
+            comments,
+          }) => (
+            <PostWidget
+              key={_id}
+              postId={_id}
+              postUserId={userId}
+              name={`${firstName} ${lastName}`}
+              description={description
+                .split(" ")
+                .slice(0, 10)
+                .join(" ")
+                .concat("...")}
+            location={location}
+            picturePath={picturePath}
+            userPicturePath={userPicturePath}
+            likes={likes}
+            comments={comments}
+            />
+          )
+        )}
+
+              
+
+              
+
+
     </>
   );
 };

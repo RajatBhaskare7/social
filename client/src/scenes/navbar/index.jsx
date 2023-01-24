@@ -41,6 +41,23 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
+  //function to search for users
+  const searchUsers = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`http://localhost:3001/users/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        search: e.target.value,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+  
+
   return (
     <FlexBetween sx={{
       position: "sticky",
@@ -72,7 +89,10 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
+            <InputBase 
+          
+            
+            placeholder="Search..." />
             <IconButton>
               <Search />
             </IconButton>
