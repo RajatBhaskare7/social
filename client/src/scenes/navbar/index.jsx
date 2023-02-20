@@ -80,8 +80,13 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+         
+       {/* //img ../assets/logoo.png */}
+
+       <img src="../assets/logoo.png" alt="logo" width="100" />
+
         </Typography>
+        
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}

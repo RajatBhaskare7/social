@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import Editprofile from "scenes/profilePage/editprofile";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -27,6 +28,11 @@ function App() {
             <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+            //make a route for edit profile
+            <Route
+              path="/profile/edit/:userId"
+              element={isAuth ? <Editprofile /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>

@@ -89,11 +89,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               postId={_id}
               postUserId={userId}
               name={`${firstName} ${lastName}`}
-              description={description
-                .split(" ")
-                .slice(0, 10)
-                .join(" ")
-                .concat("...")}
+              // description={description}
             location={location}
             picturePath={picturePath}
             userPicturePath={userPicturePath}
