@@ -11,12 +11,14 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const [totalPosts, setTotalPosts] = useState(0);
   const { palette } = useTheme();
   const navigate = useNavigate();
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const token = useSelector((state) => state.token);
   const userData = useSelector((state) => state.user);
   // console.log(userData);
@@ -82,6 +84,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
     
     <WidgetWrapper 
+    display={isNonMobileScreens ? " " : "none"}
     sx={{
       position: "fixed",
       top: "100",
@@ -90,6 +93,7 @@ const UserWidget = ({ userId, picturePath }) => {
       // height: "100%",
       // backgroundColor: "white",
       zIndex: "100",
+      
       overflow: "scroll",
       "&::-webkit-scrollbar": {
         display: "none",
