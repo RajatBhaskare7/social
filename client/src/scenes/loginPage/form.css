@@ -127,9 +127,7 @@ main {
   transition: 0.3s;
 }
 
-.toggle:hover {
-  color: #8371fd;
-}
+
 
 .input-wrap {
   position: relative;
@@ -190,7 +188,7 @@ label {
 }
 
 .sign-btn:hover {
-  background-color: #8371fd;
+  background-color: #241F3A;
 }
 
 .text {
