@@ -144,7 +144,7 @@ p,h1,h2,h3,h4,h5,h6 {
 	width: 15em;
 	padding: 0.5em 1.5em;
 	border-radius: 2em;
-	box-shadow: 5px 5px 10px 0px rgba(63, 63, 63, 0.86);
+	/* box-shadow: 5px 5px 10px 0px rgba(63, 63, 63, 0.86); */
 	cursor: pointer;
 }
 
@@ -267,3 +267,6 @@ p,h1,h2,h3,h4,h5,h6 {
 }
 
 /* </---------Media Queries---------> */
+.btn-reg{
+	color:#241F3A !important;
+}

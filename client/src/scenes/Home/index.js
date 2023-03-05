@@ -34,7 +34,7 @@ export default class index extends Component {
           color:'#241F3A',
         }}>
 
-          <Link to="/auth" style={{textDecoration:'none'}}>Register</Link>
+          <Link to="/auth" className="btn-reg" style={{textDecoration:'none'}}>Register</Link>
         </button>
 
 			</div>
