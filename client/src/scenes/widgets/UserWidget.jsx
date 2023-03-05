@@ -84,23 +84,23 @@ const UserWidget = ({ userId, picturePath }) => {
 
     
     <WidgetWrapper 
-    display={isNonMobileScreens ? " " : "none"}
-    sx={{
-      position: "fixed",
-      top: "100",
-      left: "5",
-      width: "22%",
-      // height: "100%",
-      // backgroundColor: "white",
-      zIndex: "100",
+    
+    // sx={{
+    //   position: "fixed",
+    //   top: "100",
+    //   left: "5",
+    //   width: "22%",
+    //   // height: "100%",
+    //   // backgroundColor: "white",
+    //   zIndex: "100",
       
-      overflow: "scroll",
-      "&::-webkit-scrollbar": {
-        display: "none",
-      },
+    //   overflow: "scroll",
+    //   "&::-webkit-scrollbar": {
+    //     display: "none",
+    //   },
       
 
-    }}
+    // }}
       
     >
       {/* FIRST ROW */}
