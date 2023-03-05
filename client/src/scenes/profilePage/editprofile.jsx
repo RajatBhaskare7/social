@@ -1,17 +1,57 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
-import '../loginPage/form.css'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUpdateUser } from 'state';
+// import '../loginPage/form.css'
+import {useEffect} from 'react';
 // import Logo from '../../../public/assets/logoo.png';
 export default function Editprofile() {
     const user = useSelector(state => state.user);
-    console.log(user);
+    const Dispatch = useDispatch();
+    const [firstName, setFirstName] = React.useState(user.firstName);
+    const [lastName, setLastName] = React.useState(user.lastName);
+    
+  useEffect(() => {
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+  }, [user]);
+  
+    
+
+    onsubmit = (e) => { 
+        e.preventDefault();
+        const data = {
+            firstName: firstName,
+            lastName: lastName,
+
+
+        }
+        
+        axios.patch('http://localhost:3001/users/'+ user._id, data)
+            .then(res => {
+                console.log(res.data)
+                if (res.data === 'User updated!') {
+                    alert('User updated!')
+                }
+                Dispatch(setUpdateUser(res.data));
+                
+            }
+            )
+            .catch(err => {
+                console.log(err);
+            }
+            )
+
+    }
+
 
 
     
   return (
     <div>
-      <main>
+      {/* <main>
       <div class="box">
         <div class="inner-box">
           <div class="forms-wrap">
@@ -116,7 +156,61 @@ export default function Editprofile() {
          
         </div>
       </div>
-    </main>
+    </main> */}
+
+      <Box
+       
+      >
+        <Box
+          
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+                >
+          <div className="logo">
+            <img src="../../assets/logoo.png" alt="error" />
+            
+          </div>
+          <form >
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+
+                type="text" 
+                className="form-control"
+                id="username"
+                name="username"
+                placeholder="Enter username"
+                defaultValue={user.firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+             
+            </div>
+            <div className="form-group">
+              <label htmlFor="firstname">First Name</label>
+              <input
+
+                type="text"
+                className="form-control"
+                id="firstname"
+                name="firstname"
+                placeholder="Enter firstname"
+                defaultValue={user.lastName}
+                onChange={(e) => setLastName(e.target.value)}
+
+              />
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+          </form>
+
+        </Box>
+      </Box>
+
+
+
+          
 
        
         

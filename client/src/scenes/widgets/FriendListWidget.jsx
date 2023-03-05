@@ -29,14 +29,14 @@ const FriendListWidget = ({ userId }) => {
 
   return (
     <WidgetWrapper
-      sx={{
-        position: "fixed",
-        top: "70%",
-        left: "5",
-        width: "22%",
-        // height: "100%",
-        overflow: "auto",
-      }}
+      // sx={{
+      //   position: "fixed",
+      //   top: "70%",
+      //   left: "5",
+      //   width: "22%",
+      //   // height: "100%",
+      //   overflow: "auto",
+      // }}
 
 
 

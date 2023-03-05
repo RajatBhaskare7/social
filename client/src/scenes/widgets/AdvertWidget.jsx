@@ -10,16 +10,7 @@ const AdvertWidget = () => {
 
   return (
     <WidgetWrapper
-    sx={{
-      position: "fixed",
-      top: "100",
-      left: "5",
-      width: "23%",
-      height: "auto",
-      padding: "1rem",
-      borderRadius: "0.75rem",
-      
-    }}
+   
     >
       <FlexBetween>
         <Typography color={dark} variant="h5" fontWeight="500">

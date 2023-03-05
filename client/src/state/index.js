@@ -39,9 +39,14 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+
+    setUpdateUser: (state, action) => {
+      state.user = action.payload.user;
+    }
+
   },
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost,setUpdateUser } =
   authSlice.actions;
 export default authSlice.reducer;

@@ -1,13 +1,28 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import './form.css'
+
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const navigate = useNavigate();
-  // const {_id, picturePath} = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state);
+  console.log(user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
+
+
+
+  
+
+  
   
  
 

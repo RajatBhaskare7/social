@@ -61,3 +61,30 @@ export const addRemoveFriend = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
+//edit profile
+export const editProfile = async (req, res) => {
+  //print somthing
+ 
+  try {
+    const { id } = req.params;
+    const { firstName, lastName, occupation, location, picturePath } = req.body;
+
+    const user = await User.findById(id);
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.occupation = occupation;
+    user.location = location;
+    user.picturePath = picturePath;
+
+    await user.save();
+
+    //send User updated! message
+    
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(404).json({ message: "error aaya hai" });
+  }
+}
+
+

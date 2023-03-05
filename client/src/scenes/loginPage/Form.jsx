@@ -5,11 +5,14 @@ import {
   TextField,
   useMediaQuery,
   Typography,
+  IconButton,
   useTheme,
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Card, Container, Stack } from '@mui/material';
-
+// import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -53,6 +56,7 @@ const initialValuesLogin = {
 const Form = () => {
   const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
+  const [registerValues, setRegisterValues] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -82,6 +86,13 @@ const Form = () => {
       setPageType("login");
     }
   };
+  const nextPage = () => {
+    setRegisterValues(false);
+  };
+  const prevPage = () => {
+    setRegisterValues(true);
+  };
+ 
 
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
@@ -124,314 +135,336 @@ const Form = () => {
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
-          <Box
-            
-
-          >
+          <Box>
             {isRegister && (
               <>
-              <div className="form-wrap">
-              <div className="register-form"
-               
-                
-              >
-              <div className="logo">
-                <img src="../assets/logoo.png" alt="error" />
-             
-              </div>
+                <div className="form-wrap">
+                  <div className="register-form">
+                    <div className="logo">
+                      <img src="../assets/logoo.png" alt="error" />
+                    </div>
 
-              <div className="heading">
-                <h2>Welcome Back</h2>
-                <h6
-              onClick={() => {
-                setPageType(isLogin ? "register" : "login");
-                resetForm();
-              }}
-              className="text"
-              sx={{
-                textDecoration: "underline",
-                color: "#241F3A",
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#241F3A",
-                },
-              }}
-            >
-              {isLogin
-                ? "Don't have an account? Sign Up here."
-                : "Already have an account? Login here."}
-            </h6>
-              </div>
-              <div className="acutal-form margin-top" 
-              
-
-              >
-                <div
-                  className="first-col"
-                >
-                <div className="input-wrap">                
-                <input
-                  label="First Name"
-                  onBlur={handleBlur}
-                  type="text"
-                  onChange={handleChange}
-                  className="input-field"
-                  value={values.firstName}
-                  name="firstName"
-                  placeholder="First Name"
-                  error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
-                  }
-                  helperText={touched.firstName && errors.firstName}
-                  sx={{ gridColumn: "span 2" }}
-                />               
-                </div>
-                <div className="input-wrap">
-                <input
-                  label="Last Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  className="input-field"
-                  value={values.lastName}
-                  name="lastName"
-                  placeholder="Last Name"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                  // sx={{ gridColumn: "span 2" }}
-                />
-                
-                </div>
-                </div>
-                {/* <div className="input-wrap">
-                <input
-                  label="Location"
-                  onBlur={handleBlur}
-                  className="input-field"
-                  onChange={handleChange}
-                  value={values.location}
-                  name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
-                  // sx={{ gridColumn: "span 4" }}
-                />
-                <label>Location</label>
-
-                </div> */}
-                {/* <div className="input-wrap">
-
-                <input
-                  label="Occupation"
-                  onBlur={handleBlur}
-                  className="input-field"
-                  onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
-                  error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
-                  }
-                  helperText={touched.occupation && errors.occupation}
-                  // sx={{ gridColumn: "span 4" }}
-                />
-                <label>Occupation</label>
-                </div> */}
-                <div className="input-wrap">
-                  <input
-                    type="text"
-                    minlength="4"
-                    className="input-field"
-                    autocomplete="off"
-                    required
-                    placeholder="Email"
-                   
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-                  />
-                  {/*remove label when character become 1 */}
-                             
-                </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="password"
-                
-                    className="input-field"
-                 
-                    required
-                    placeholder="Password"
-                  
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.password}
-                    name="password"
-                    error={Boolean(touched.password) && Boolean(errors.password)}
-                    helperText={touched.password && errors.password}
-                  />
-                 
-
-
-               
-                </div>
-
-                <div className="input-wrap">
-                <Box
-                  gridColumn="span 4"
-                  border={`1px solid ${palette.neutral.medium}`}
-                  borderRadius="5px"
-                  p="1rem"
-                >
-                  <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) =>
-                      setFieldValue("picture", acceptedFiles[0])
-                    }
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        border={`2px dashed #bbb`}
-                        p="1rem"
-
-                        sx={{ "&:hover": { cursor: "pointer" },
-                          color: "#bbb",
-                      }}
+                    <div className="heading">
+                      <h2>Welcome Back</h2>
+                      <h6
+                        onClick={() => {
+                          setPageType(isLogin ? "register" : "login");
+                          resetForm();
+                        }}
+                        className="text"
+                        sx={{
+                          textDecoration: "underline",
+                          color: "#241F3A",
+                          "&:hover": {
+                            cursor: "pointer",
+                            color: "#241F3A",
+                          },
+                        }}
                       >
-                        <input {...getInputProps()} />
-                        {!values.picture ? (
-                          <p 
+                        {isLogin
+                          ? "Don't have an account? Sign Up here."
+                          : "Already have an account? Login here."}
+                      </h6>
+                    </div>
+                    <div className="acutal-form margin-top">
+                      {registerValues==true ? (
+                      <div className="first-page">
+                        <div className="input-wrap">
+                          <input
+                            label="First Name"
+                            onBlur={handleBlur}
+                            type="text"
+                            onChange={handleChange}
+                            className="input-field"
+                            value={values.firstName}
+                            name="firstName"
+                            placeholder="First Name"
+                            error={
+                              Boolean(touched.firstName) &&
+                              Boolean(errors.firstName)
+                            }
+                            helperText={touched.firstName && errors.firstName}
+                            sx={{ gridColumn: "span 2" }}
+                          />
+                        </div>
+                        <div className="input-wrap">
+                          <input
+                            label="Last Name"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            className="input-field"
+                            value={values.lastName}
+                            name="lastName"
+                            placeholder="Last Name"
+                            error={
+                              Boolean(touched.lastName) &&
+                              Boolean(errors.lastName)
+                            }
+                            helperText={touched.lastName && errors.lastName}
+                            // sx={{ gridColumn: "span 2" }}
+                          />
+                        </div>
+                        <div className="input-wrap">
+                          <input
+                            type="email"
+                            minlength="4"
+                            className="input-field"
+                            autocomplete="off"
+                            required
+                            placeholder="Email"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.email}
+                            name="email"
+                            error={
+                              Boolean(touched.email) && Boolean(errors.email)
+                            }
+                            helperText={touched.email && errors.email}
+                          />
+                          {/*remove label when character become 1 */}
+                        </div>
+                        <div className="input-wrap">
+                        <input
+                          type="password"
+                          className="input-field"
+                          required
+                          placeholder="Password"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.password}
+                          name="password"
+                          error={
+                            Boolean(touched.password) &&
+                            Boolean(errors.password)
+                          }
+                          helperText={touched.password && errors.password}
+                        />
+                      </div>
+                      </div>):(
+                      <div className="second-page">                   
+                      <div className="input-wrap">
+                        <input
+                          label="Location"
+                          onBlur={handleBlur}
+                          className="input-field"
+                          onChange={handleChange}
+                          value={values.location}
+                          name="location"
+                          error={
+                            Boolean(touched.location) &&
+                            Boolean(errors.location)
+                          }
+                          helperText={touched.location && errors.location}
+                          // sx={{ gridColumn: "span 4" }}
+                        />
+                        <label>Location</label>
+                      </div>
+                      <div className="input-wrap">
+                        <input
+                          label="Occupation"
+                          onBlur={handleBlur}
+                          className="input-field"
+                          onChange={handleChange}
+                          value={values.occupation}
+                          name="occupation"
+                          error={
+                            Boolean(touched.occupation) &&
+                            Boolean(errors.occupation)
+                          }
+                          helperText={touched.occupation && errors.occupation}
+                          // sx={{ gridColumn: "span 4" }}
+                        />
+                        <label>Occupation</label>
+                      </div>
+                      <div className="input-wrap">
+                        <Box
+                          gridColumn="span 4"
+                          border={`1px solid ${palette.neutral.medium}`}
+                          borderRadius="5px"
+                          p="1rem"
+                          
+                         
+                        >
+                          <Dropzone
+                            acceptedFiles=".jpg,.jpeg,.png"
+                            multiple={false}
+                            onDrop={(acceptedFiles) =>
+                              setFieldValue("picture", acceptedFiles[0])
+                            }
                            
-                          >Add Picture Here</p>
-                        ) : (
-                          <FlexBetween>
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlinedIcon />
-                          </FlexBetween>
-                        )}
-                      </Box>
-                    )}
-                  </Dropzone>
+                          >
+                            {({ getRootProps, getInputProps }) => (
+                              <Box
+                                {...getRootProps()}
+                                border={`2px dashed #bbb`}
+                                p="1rem"
+                                sx={{
+                                  "&:hover": { cursor: "pointer" },
+                                  color: "#bbb",
+                                  
+                                }}
+                              >
+                                <input {...getInputProps()} />
+                                {!values.picture ? (
+                                  <p>Add Picture Here</p>
+                                ) : (
+                                  <FlexBetween>
+                                    <Typography>
+                                      {values.picture.name}
+                                    </Typography>
+                                    <EditOutlinedIcon />
+                                  </FlexBetween>
+                                )}
+                              </Box>
+                            )}
+                          </Dropzone>
 
-                </Box>
-                <Button
-              fullWidth
-              class="sign-btn margin-top"
-              type="submit"
-              
-              
-            >
-              {isLogin ? "LOGIN" : "REGISTER"}
-            </Button> 
-                </div>
-                </div>
-                </div>
+                          {/* {errors.picture && (
+                    <Typography color="error">{errors.picture}</Typography>
+                  )} */}
+                  
+                        </Box>
+
+                        
+                      </div>
+
+                      </div>
+                      )}
+                      <div>
+                      {/* <button className="next-btn " onClick={nextPage}>{registerValues==true? "Next" : "Prev"}</button> */}
+                      
+                    </div>
+                    <div className="btn-wrap">
+                    <div className="prev__next__btn">
+                      <IconButton 
+                        disabled={registerValues==true? true : false}
+                      >
+                      <ArrowBackIcon sx={{
+                        color:'#241F3A',
+                        fontSize:'25px',
+                        borderRadius:'50%',
+                        border:'1px solid #241F3A',
+                        }  }
+                        onClick={prevPage}
+                          />
+                      </IconButton>
+                      <IconButton  
+                        disabled={registerValues==true? false : true}
+                      >
+                      <ArrowForwardIcon onClick={nextPage} sx={{
+                        color:'#241F3A',
+                        fontSize:'25px',
+                        borderRadius:'50%',
+                        border:'1px solid #241F3A',
+                        }  }  />
+                      </IconButton>
+                      </div>
+                      <Button
+                          fullWidth
+                          class="sign-btn margin-top"
+                          type="submit"
+                        >
+                          {isLogin ? "LOGIN" : "REGISTER"}
+                        </Button>
+                      
+                        </div>
+                       
+            {/* { make to icons arrow and add the functionality of next and previous button} */}
+                  
+                    
+                    
+
+                    </div>
+                  </div>
                 </div>
               </>
             )}
-            {
-              isLogin &&
-              (
-                <div className="forms-wrap">
-         
-           
-         
-            <div className="sign-in-form">
-              <div className="logo">
-                <img src="../assets/logoo.png" alt="error" />
-             
-              </div>
+            {isLogin && (
+              <div className="forms-wrap">
+                <div className="sign-in-form">
+                  <div className="logo">
+                    <img src="../assets/logoo.png" alt="error" />
+                  </div>
 
-              <div className="heading">
-                <h2>Welcome Back</h2>
-                <h6
-              onClick={() => {
-                setPageType(isLogin ? "register" : "login");
-                resetForm();
-              }}
-              className="text"
-              sx={{
-                textDecoration: "underline",
-                color: "#241F3A",
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#241F3A",
-                },
-              }}
-            >
-              {isLogin
-                ? "Don't have an account? Sign Up here."
-                : "Already have an account? Login here."}
-            </h6>
-              </div>
+                  <div className="heading">
+                    <h2>Welcome Back</h2>
+                    <h6
+                      onClick={() => {
+                        setPageType(isLogin ? "register" : "login");
+                        resetForm();
+                      }}
+                      className="text"
+                      sx={{
+                        textDecoration: "underline",
+                        color: "#241F3A",
+                        "&:hover": {
+                          cursor: "pointer",
+                          color: "#241F3A",
+                        },
+                      }}
+                    >
+                      {isLogin
+                        ? "Don't have an account? Sign Up here."
+                        : "Already have an account? Login here."}
+                    </h6>
+                  </div>
 
-              <div className="actual-form">
-                <div className="input-wrap">
-                  <input
-                    type="text"
-                    minlength="4"
-                    className="input-field"
-                    autocomplete="off"
-                    required
-                   
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-                  />
-                  {/*remove label when character become 1 */}
-                  {
-                    values.email.length > 0 ? null: <label>Email</label> 
-                  }             
+                  <div className="actual-form">
+                    <div className="input-wrap">
+                      <input
+                        type="text"
+                        minlength="4"
+                        className="input-field"
+                        autocomplete="off"
+                        required
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        value={values.email}
+                        name="email"
+                        error={Boolean(touched.email) && Boolean(errors.email)}
+                        helperText={touched.email && errors.email}
+                      />
+                      {/*remove label when character become 1 */}
+                      {values.email.length > 0 ? null : <label>Email</label>}
+                    </div>
+
+                    <div className="input-wrap">
+                      <input
+                        type="password"
+                        className="input-field"
+                        required
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        value={values.password}
+                        name="password"
+                        error={
+                          Boolean(touched.password) && Boolean(errors.password)
+                        }
+                        helperText={touched.password && errors.password}
+                      />
+                      {values.password.length > 0 ? null : (
+                        <label>Password</label>
+                      )}
+                    </div>
+
+                    <Button
+                      fullWidth
+                      class="sign-btn"
+                      type="submit"
+                      sx={{
+                        m: "2rem 0",
+                        p: "1rem",
+                        backgroundColor: palette.primary.main,
+                        color: palette.background.alt,
+                        "&:hover": { color: palette.primary.main },
+                      }}
+                    >
+                      {isLogin ? "LOGIN" : "REGISTER"}
+                    </Button>
+                  </div>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="password"
-                
-                    className="input-field"
-                 
-                    required
-                  
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.password}
-                    name="password"
-                    error={Boolean(touched.password) && Boolean(errors.password)}
-                    helperText={touched.password && errors.password}
-                  />
-                  {
-                    values.password.length > 0 ? null: <label>Password</label>
-                  }
-
-
-               
-                </div>
-                
-                <Button
-              fullWidth
-              class="sign-btn"
-              type="submit"
-              
-              sx={{
-                m: "2rem 0",
-                p: "1rem",
-                backgroundColor: palette.primary.main,
-                color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
-              }}
-            >
-              {isLogin ? "LOGIN" : "REGISTER"}
-            </Button>       
               </div>
-            </div>
-            </div>
-              )
-            }
+            )}
 
             {/* <TextField
               label="Email"
@@ -454,12 +487,8 @@ const Form = () => {
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
             /> */}
-           
-            
-            
-          
           </Box>
-                  
+
           {/* BUTTONS */}
           {/* <Box>
             <Button
