@@ -11,6 +11,7 @@ export default class index extends Component {
   loginpage = () => {
     this.props.history.push('/auth');
   }
+  
 
   render() {
     return (

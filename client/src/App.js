@@ -19,7 +19,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   setTimeout(() => {
     setLoading(true);
-  }, 2000);
+  }, 1000);
   
   if (!loading) {
     return <Loader />;

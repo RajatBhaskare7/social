@@ -43,7 +43,7 @@ const UserWidget = ({ userId, picturePath }) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    console.log(data);
+  
 
     setTotalPosts(data.length);
   

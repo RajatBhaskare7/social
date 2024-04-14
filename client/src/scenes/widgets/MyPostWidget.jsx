@@ -44,13 +44,20 @@ const MyPostWidget = ({ picturePath }) => {
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
+      console.log(image);
     }
+    console.log(formData);
 
+   
+    console.log(image);
+
+   
     const response = await fetch(`http://localhost:3001/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
     });
+    console.log(formData);
     const posts = await response.json();
     dispatch(setPosts({ posts }));
     setImage(null);
