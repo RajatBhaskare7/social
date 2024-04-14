@@ -28,7 +28,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(`https://social-a512.onrender.com/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -38,7 +38,7 @@ const UserWidget = ({ userId, picturePath }) => {
   
   //get all posts by user
   const getuserposts = async () => {
-    const response = await fetch(`http://localhost:3001/posts/${userId}/posts`, {
+    const response = await fetch(`https://social-a512.onrender.com/posts/${userId}/posts`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

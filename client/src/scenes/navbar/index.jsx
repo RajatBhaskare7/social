@@ -44,7 +44,7 @@ const Navbar = () => {
   //function to search for users
   const searchUsers = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3001/users/search`, {
+    const response = await fetch(`https://social-a512.onrender.com/users/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

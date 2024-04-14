@@ -29,7 +29,7 @@ export default function Editprofile() {
 
         }
         
-        axios.patch('http://localhost:3001/users/'+ user._id, data)
+        axios.patch('https://social-a512.onrender.com/users/'+ user._id, data)
             .then(res => {
                 console.log(res.data)
                 if (res.data === 'User updated!') {
