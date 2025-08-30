@@ -1,8 +1,8 @@
 import {
-  ManageAccountsOutlined,
-  EditOutlined,
-  LocationOnOutlined,
-  WorkOutlineOutlined,
+	ManageAccountsOutlined,
+	EditOutlined,
+	LocationOnOutlined,
+	WorkOutlineOutlined,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
@@ -14,160 +14,145 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
 const UserWidget = ({ userId, picturePath }) => {
-  const [user, setUser] = useState(null);
-  const [totalPosts, setTotalPosts] = useState(0);
-  const { palette } = useTheme();
-  const navigate = useNavigate();
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const token = useSelector((state) => state.token);
-  const userData = useSelector((state) => state.user);
-  // console.log(userData);
-  const dark = palette.neutral.dark;
-  const medium = palette.neutral.medium;
-  const main = palette.neutral.main;
+	const [user, setUser] = useState(null);
+	const [totalPosts, setTotalPosts] = useState(0);
+	const { palette } = useTheme();
+	const navigate = useNavigate();
+	const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+	const token = useSelector((state) => state.token);
+	const userData = useSelector((state) => state.user);
+	// console.log(userData);
+	const dark = palette.neutral.dark;
+	const medium = palette.neutral.medium;
+	const main = palette.neutral.main;
 
+	const getUser = async () => {
+		const response = await fetch(
+			`${process.env.REACT_APP_API_URL}/users/${userId}`,
+			{
+				method: "GET",
+				headers: { Authorization: `Bearer ${token}` },
+			}
+		);
+		const data = await response.json();
+		setUser(data);
+	};
 
-  const getUser = async () => {
-    const response = await fetch(`https://social-a512.onrender.com/users/${userId}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setUser(data);
-  };
-  
-  //get all posts by user
-  const getuserposts = async () => {
-    const response = await fetch(`https://social-a512.onrender.com/posts/${userId}/posts`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-  
+	//get all posts by user
+	const getuserposts = async () => {
+		const response = await fetch(
+			`${process.env.REACT_APP_API_URL}/posts/${userId}/posts`,
+			{
+				method: "GET",
+				headers: { Authorization: `Bearer ${token}` },
+			}
+		);
+		const data = await response.json();
 
-    setTotalPosts(data.length);
-  
+		setTotalPosts(data.length);
+	};
 
+	useEffect(() => {
+		getUser();
+		getuserposts();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    
+	if (!user) {
+		return null;
+	}
 
+	const {
+		firstName,
+		lastName,
+		location,
+		occupation,
+		viewedProfile,
+		impressions,
+		friends,
+	} = user;
 
-    
-  };
+	return (
+		//make this a component fixed to the right side of the screen
 
-  
+		<WidgetWrapper
 
-  useEffect(() => {
-    getUser();
-    getuserposts();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+		// sx={{
+		//   position: "fixed",
+		//   top: "100",
+		//   left: "5",
+		//   width: "22%",
+		//   // height: "100%",
+		//   // backgroundColor: "white",
+		//   zIndex: "100",
 
-  if (!user) {
-    return null;
-  }
+		//   overflow: "scroll",
+		//   "&::-webkit-scrollbar": {
+		//     display: "none",
+		//   },
 
+		// }}
+		>
+			{/* FIRST ROW */}
+			<FlexBetween
+				gap="0.5rem"
+				pb="1.1rem"
+				onClick={() => navigate(`/profile/${userId}`)}
+			>
+				<FlexBetween gap="1rem">
+					<UserImage image={picturePath} />
+					<Box>
+						<Typography
+							variant="h4"
+							color={dark}
+							fontWeight="500"
+							sx={{
+								"&:hover": {
+									color: palette.primary.light,
+									cursor: "pointer",
+								},
+							}}
+						>
+							{firstName} {lastName}
+						</Typography>
+					</Box>
+				</FlexBetween>
+				<ManageAccountsOutlined
+					onClick={(e) => {
+						e.stopPropagation();
+						navigate(`/profile/edit/${userId}`);
+					}}
+					//make button to edit profile
+					sx={{
+						color: main,
+						"&:hover": {
+							// color: palette.primary.light,
+							cursor: "pointer",
+						},
+					}}
+				/>
+			</FlexBetween>
 
+			<Divider />
 
-  const {
-    firstName,
-    lastName,
-    location,
-    occupation,
-    viewedProfile,
-    impressions,
-    friends,
-    
-  } = user;
+			{/*make a section with total posts and friends */}
+			<Box p="1rem 0">
+				<FlexBetween mb="0.5rem">
+					<Typography color={medium}>Total Posts</Typography>
+					<Typography color={main} fontWeight="500">
+						{totalPosts}
+					</Typography>
+				</FlexBetween>
+				<FlexBetween mb="0.5rem">
+					<Typography color={medium}>Total Friends</Typography>
+					<Typography color={main} fontWeight="500">
+						{friends.length}
+					</Typography>
+				</FlexBetween>
+			</Box>
+			<Divider />
 
-  return (
-    //make this a component fixed to the right side of the screen
-
-    
-    <WidgetWrapper 
-    
-    // sx={{
-    //   position: "fixed",
-    //   top: "100",
-    //   left: "5",
-    //   width: "22%",
-    //   // height: "100%",
-    //   // backgroundColor: "white",
-    //   zIndex: "100",
-      
-    //   overflow: "scroll",
-    //   "&::-webkit-scrollbar": {
-    //     display: "none",
-    //   },
-      
-
-    // }}
-      
-    >
-      {/* FIRST ROW */}
-      <FlexBetween
-        gap="0.5rem"
-        pb="1.1rem"
-        
-        onClick={() => navigate(`/profile/${userId}`)}
-      >
-        <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
-          <Box>
-            <Typography
-              variant="h4"
-              color={dark}
-              fontWeight="500"
-              sx={{
-                "&:hover": {
-                  color: palette.primary.light,
-                  cursor: "pointer",
-                },
-              }}
-            >
-              {firstName} {lastName}
-            </Typography>   
-          </Box>
-        </FlexBetween>
-        <ManageAccountsOutlined
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/profile/edit/${userId}`);
-          }}
-          //make button to edit profile
-          sx={{
-            color: main,
-            "&:hover": {
-              // color: palette.primary.light,
-              cursor: "pointer",
-            },
-          }}
-        />
-
-      </FlexBetween>
-
-
-      <Divider />
-
-      {/*make a section with total posts and friends */}
-      <Box p="1rem 0">
-        <FlexBetween mb="0.5rem">
-          <Typography color={medium}>Total Posts</Typography>
-          <Typography color={main} fontWeight="500">
-            
-             {totalPosts}
-          </Typography>
-        </FlexBetween>
-        <FlexBetween mb="0.5rem">
-          <Typography color={medium}>Total Friends</Typography>
-          <Typography color={main} fontWeight="500">
-            {friends.length}
-          </Typography>
-        </FlexBetween>
-      </Box>
-      <Divider/>
-
-      {/* SECOND ROW */}
-      {/* <Box p="1rem 0">
+			{/* SECOND ROW */}
+			{/* <Box p="1rem 0">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
           <Typography color={medium}>{location}</Typography>
@@ -178,10 +163,10 @@ const UserWidget = ({ userId, picturePath }) => {
         </Box> 
       </Box> */}
 
-      {/* <Divider /> */}
+			{/* <Divider /> */}
 
-      {/* THIRD ROW */}
-      {/* <Box p="1rem 0">
+			{/* THIRD ROW */}
+			{/* <Box p="1rem 0">
         <FlexBetween mb="0.5rem">
           <Typography color={medium}>Who's viewed your profile</Typography>
           <Typography color={main} fontWeight="500">
@@ -196,42 +181,42 @@ const UserWidget = ({ userId, picturePath }) => {
         </FlexBetween>
       </Box> */}
 
-      {/* <Divider /> */}
+			{/* <Divider /> */}
 
-      {/* FOURTH ROW */}
-      <Box p="1rem 0">
-        <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
-          Social Profiles
-        </Typography>
+			{/* FOURTH ROW */}
+			<Box p="1rem 0">
+				<Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
+					Social Profiles
+				</Typography>
 
-        <FlexBetween gap="1rem" mb="0.5rem">
-          <FlexBetween gap="1rem">
-            <img src="../assets/twitter.png" alt="twitter" />
-            <Box>
-              <Typography color={main} fontWeight="500">
-                Twitter
-              </Typography>
-              <Typography color={medium}>Social Network</Typography>
-            </Box>
-          </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
-        </FlexBetween>
+				<FlexBetween gap="1rem" mb="0.5rem">
+					<FlexBetween gap="1rem">
+						<img src="../assets/twitter.png" alt="twitter" />
+						<Box>
+							<Typography color={main} fontWeight="500">
+								Twitter
+							</Typography>
+							<Typography color={medium}>Social Network</Typography>
+						</Box>
+					</FlexBetween>
+					<EditOutlined sx={{ color: main }} />
+				</FlexBetween>
 
-        <FlexBetween gap="1rem">
-          <FlexBetween gap="1rem">
-            <img src="../assets/linkedin.png" alt="linkedin" />
-            <Box>
-              <Typography color={main} fontWeight="500">
-                Linkedin
-              </Typography>
-              <Typography color={medium}>Network Platform</Typography>
-            </Box>
-          </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
-        </FlexBetween>
-      </Box>
-    </WidgetWrapper>
-  );
+				<FlexBetween gap="1rem">
+					<FlexBetween gap="1rem">
+						<img src="../assets/linkedin.png" alt="linkedin" />
+						<Box>
+							<Typography color={main} fontWeight="500">
+								Linkedin
+							</Typography>
+							<Typography color={medium}>Network Platform</Typography>
+						</Box>
+					</FlexBetween>
+					<EditOutlined sx={{ color: main }} />
+				</FlexBetween>
+			</Box>
+		</WidgetWrapper>
+	);
 };
 
 export default UserWidget;
